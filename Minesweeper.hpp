@@ -1,8 +1,6 @@
 #include<bits/stdc++.h>
-#include<chrono>
 #include"colors.hpp"
 using namespace std;
-using namespace std::chrono;
 
 class Cube{
     public:
