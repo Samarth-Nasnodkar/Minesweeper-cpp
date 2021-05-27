@@ -36,9 +36,6 @@ class Minesweeper{
         Cube cubes[625];
         int mines = 0.3 * x * y;
     public:
-        Minesweeper(){
-            cout<<"Minesweeper!\n";
-        }
         Minesweeper &generate(){
             srand(time(0));
             int mineCoords[mines];
@@ -46,37 +43,25 @@ class Minesweeper{
             int tempMines = 0;
             while(tempMines < mines){
                 newCoord = rand() % (x * y);
-                while(isPresent(mineCoords, mines, newCoord)){
+                while(isPresent(mineCoords, mines, newCoord))
                     newCoord = rand() % (x * y);
-                }
                 mineCoords[tempMines] = newCoord;
                 tempMines++;
             }
             for(int i=0; i < x * y; i++){
-                if(isPresent(mineCoords, mines, i)){
-                    Cube cube(i, true);
-                    cubes[i] = cube;
-                }
-                else{
-                    Cube cube(i, false);
-                    cubes[i] = cube;
-                }
+                Cube cube(i, isPresent(mineCoords, mines, i));
+                cubes[i] = cube;
             }
             for(int i=0; i < x * y; i++){
-                auto cube = cubes[i];
-                int value;
+                int value = 0;
                 int toBeChecked[] = {i - x - 1, i - 1, i + x - 1, i - x, i + x, i - x + 1, i + 1, i + x + 1};
-                int start;
-                int end;
-                if(!cube.isBomb){
-                    value = 0;
-                    start = (i % x == 0) ? 3 : 0;
-                    end = (i % x == x - 1) ? 5 : 8;
+                int start = (i % x == 0) ? 3 : 0;
+                int end = (i % x == x - 1) ? 5 : 8;
+                if(!cubes[i].isBomb){
                     for(int j = start; j < end; j++)
                         if((toBeChecked[j] < x * y) && (toBeChecked[j] >= 0))
-                            if(cubes[toBeChecked[j]].isBomb){
+                            if(cubes[toBeChecked[j]].isBomb)
                                 value ++;
-                            }
                     cubes[i].value = value;
                 }
             }
