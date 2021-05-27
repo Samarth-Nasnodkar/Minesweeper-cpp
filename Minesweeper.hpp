@@ -68,29 +68,17 @@ class Minesweeper{
                 auto cube = cubes[i];
                 int value;
                 int toBeChecked[] = {i - x - 1, i - 1, i + x - 1, i - x, i + x, i - x + 1, i + 1, i + x + 1};
+                int start;
+                int end;
                 if(!cube.isBomb){
                     value = 0;
-                    if(i % x == 0){
-                        for(int j = 3; j < 8; j++)
-                            if((toBeChecked[j] < x * y) && (toBeChecked[j] >= 0))
-                                if(cubes[toBeChecked[j]].isBomb){
-                                    value ++;
-                                }
-                    }
-                    else if(i % x == x - 1){
-                        for(int j = 0; j < 5; j++)
-                            if((toBeChecked[j] < x * y) && (toBeChecked[j] > 0))
-                                if(cubes[toBeChecked[j]].isBomb){
-                                    value ++;
-                                }
-                    }
-                    else{
-                        for(int j = 0; j < 8; j++)
-                            if((toBeChecked[j] < x * y) && (toBeChecked[j] > 0))
-                                if(cubes[toBeChecked[j]].isBomb){
-                                    value ++;
-                                }
-                    }
+                    start = (i % x == 0) ? 3 : 0;
+                    end = (i % x == x - 1) ? 5 : 8;
+                    for(int j = start; j < end; j++)
+                        if((toBeChecked[j] < x * y) && (toBeChecked[j] >= 0))
+                            if(cubes[toBeChecked[j]].isBomb){
+                                value ++;
+                            }
                     cubes[i].value = value;
                 }
             }
